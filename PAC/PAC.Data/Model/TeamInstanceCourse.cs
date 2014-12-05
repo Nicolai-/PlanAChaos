@@ -9,7 +9,6 @@ namespace PAC.Data.Model
 {
     public class TeamInstanceCourse
     {
-        [Key]
         public int CourseId { get; set; }
         public int TeamInstanceId { get; set; }
 
@@ -17,9 +16,9 @@ namespace PAC.Data.Model
         public int TeacherId { get; set; }
 
         //Relation to TeamInstance
-        public virtual IList<TeamInstance> TeamInstances { get; set; } 
+        public virtual TeamInstance TeamInstance { get; set; } 
 
         //Relation to Course
-        public virtual IList<Course> Courses { get; set; }
+        public virtual Course Course { get; set; }
     }
 }

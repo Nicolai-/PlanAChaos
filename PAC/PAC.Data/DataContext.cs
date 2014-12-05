@@ -19,6 +19,15 @@ namespace PAC.Data
         {
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TeacherCourse>()
+                .HasKey(t => new {t.CourseId, t.TeacherId});
+
+            modelBuilder.Entity<TeamInstanceCourse>()
+                .HasKey(ti => new {ti.CourseId, ti.TeamInstanceId});
+        }
+
         /// <summary>
         /// Gets a collection of customer entities.
         /// </summary>
@@ -34,7 +43,7 @@ namespace PAC.Data
         
         public DbSet<TeamInstance> TeamInstances { get; set; }
 
-        public DbSet<TeamInstanceCourse> TeamInstanceCourses { get; set; }
+        public DbSet<TeamInstanceCourse> TeamInstancesCourses { get; set; }
     
     }
 }

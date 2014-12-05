@@ -9,13 +9,13 @@ namespace PAC.Data.Model
 {
     public class TeacherCourse
     {
-        [Key]
         public int TeacherId { get; set; }
         public int CourseId { get; set; }
 
+
         //Relation to Teacher
-        public virtual IList<Teacher> Teachers { get; set; }
+        public virtual Teacher Teacher { get; set; }
         //Relation to Course
-        public virtual IList<Course> Courses { get; set; }
+        public virtual Course Course { get; set; }
     }
 }

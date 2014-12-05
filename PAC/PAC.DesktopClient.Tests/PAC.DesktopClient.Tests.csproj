@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>4b660696-ecf0-417c-b0c7-824a22d05fb7</ProjectGuid>
+    <ProjectGuid>{695190C4-7D58-477F-A07A-377CE60FC0AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PAC.DesktopClient.Tests</RootNamespace>
