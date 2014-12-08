@@ -40,6 +40,18 @@ namespace PAC.Data
 
         #endregion
 
+        #region TeacherLogic
+        public void AddNewTeacher(Teacher teacher)
+        {
+            Check.Require(teacher.FirstName);
+            Check.Require(teacher.LastName);
+
+            context.Teachers.Add(teacher);
+            context.SaveChanges();
+        }
+
+        #endregion
+
         #region TeamLogic
 
         public void AddNewTeam(Team team)
@@ -52,6 +64,18 @@ namespace PAC.Data
 
         #endregion
 
+        #region CourseLogic
+        public void AddNewCourse(Course course)
+        {
+            Check.Require(course.CourseName);
+            Check.Require(course.CourseLength.ToString());
+            Check.Require(course.CourseDesription);
+
+            context.Courses.Add(course);
+            context.SaveChanges();
+        }
+
+        #endregion
 
         #region TeamInstanceLogic
 
