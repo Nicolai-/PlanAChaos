@@ -30,6 +30,12 @@ namespace PAC.Data
         }
 
         #region StudentLogic
+
+        public Student GetStudentById(int? id)
+        {
+            return context.Students.Find(id);
+        }
+
         public void AddNewStudent(Student student)
         {
             Check.Require(student.FirstName);
@@ -39,15 +45,50 @@ namespace PAC.Data
             context.SaveChanges();
         }
 
+        public void EditStudent(Student student)
+        {
+            Check.Require(student.FirstName);
+            Check.Require(student.LastName);
+
+            context.Entry(student).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void DeleteStudent(Student student)
+        {
+            context.Students.Remove(student);
+            context.SaveChanges();
+        }
+
         #endregion
 
         #region TeacherLogic
+
+        public Teacher GetTeacherById(int? id)
+        {
+            return context.Teachers.Find(id);
+        }
+
         public void AddNewTeacher(Teacher teacher)
         {
             Check.Require(teacher.FirstName);
             Check.Require(teacher.LastName);
 
             context.Teachers.Add(teacher);
+            context.SaveChanges();
+        }
+
+        public void EditTeacher(Teacher teacher)
+        {
+            Check.Require(teacher.FirstName);
+            Check.Require(teacher.LastName);
+            context.Entry(teacher).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void DeleteTeacher(Teacher teacher)
+        {
+            context.Teachers.Remove(teacher);
             context.SaveChanges();
         }
 
@@ -70,12 +111,26 @@ namespace PAC.Data
 
         public void EditTeam(Team team)
         {
+            Check.Require(team.TeamName);
+
            context.Entry(team).State = EntityState.Modified;
            context.SaveChanges();
+        }
+
+        public void DeleteTeam(Team team)
+        {
+            context.Teams.Remove(team);
+            context.SaveChanges();
         }
         #endregion
 
         #region CourseLogic
+
+        public Course GetCourseById(int? id)
+        {
+            return context.Courses.Find(id);
+        }
+
         public void AddNewCourse(Course course)
         {
             Check.Require(course.CourseName);
@@ -83,6 +138,22 @@ namespace PAC.Data
             Check.Require(course.CourseDesription);
 
             context.Courses.Add(course);
+            context.SaveChanges();
+        }
+
+        public void EditCourse(Course course)
+        {
+            Check.Require(course.CourseName);
+            Check.Require(course.CourseLength.ToString());
+            Check.Require(course.CourseDesription);
+
+            context.Entry(course).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void DeleteCourse(Course course)
+        {
+            context.Courses.Remove(course);
             context.SaveChanges();
         }
 
@@ -102,6 +173,19 @@ namespace PAC.Data
             return context.TeamInstances.Find(id);
         }
 
+        public void EditTeamInstance(TeamInstance ti)
+        {
+            Check.Require(ti.TeamInstanceName);
+            context.Entry(ti).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void DeleteTeamInstance(TeamInstance ti)
+        {
+            context.TeamInstances.Remove(ti);
+            context.SaveChanges();
+        }
+
         #endregion
 
         #region TeamInstanceCourseLogic
@@ -115,6 +199,18 @@ namespace PAC.Data
         public TeamInstanceCourse GetTeamInstanceCourseById(int courseId, int teamInstanceId)
         {
             return context.TeamInstancesCourses.Find(courseId, teamInstanceId);
+        }
+
+        public void EditTeamInstanceCourse(TeamInstanceCourse teamInstanceCourse)
+        {
+            context.Entry(teamInstanceCourse).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void DeleteTeamInstanceCourse(TeamInstanceCourse teamInstanceCourse)
+        {
+            context.TeamInstancesCourses.Remove(teamInstanceCourse);
+            context.SaveChanges();
         }
 
         #endregion
