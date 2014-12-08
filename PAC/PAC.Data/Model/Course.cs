@@ -13,5 +13,8 @@ namespace PAC.Data.Model
 
         //Relation to TeamInstanceCourse
         public virtual IList<TeamInstanceCourse> TeamInstanceCourses { get; set; }
+
+        //Relation to Course
+        public virtual IList<TeacherCourse> TeacherCourses { get; set; }
     }
 }

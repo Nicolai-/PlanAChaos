@@ -28,10 +28,7 @@ namespace PAC.Data
             get { return context; }
         }
 
-        /// <summary>
-        /// Adds a new customer using the specified first and last name.
-        /// </summary>
-
+        #region StudentLogic
         public void AddNewStudent(Student student)
         {
             Check.Require(student.FirstName);
@@ -41,6 +38,26 @@ namespace PAC.Data
             context.SaveChanges();
         }
 
+        #endregion
+
+        #region TeamLogic
+
+        public void AddNewTeam(Team team)
+        {
+            Check.Require(team.TeamName);
+
+            context.Teams.Add(team);
+            context.SaveChanges();
+        }
+
+        #endregion
+
+
+        #region TeamInstanceLogic
+
+        #endregion
+
+
         static class Check
         {
             public static void Require(string value)
@@ -49,9 +66,9 @@ namespace PAC.Data
                     throw new ArgumentNullException();
                 else if (value.Trim().Length == 0)
                     throw new ArgumentException();
-
             }
         }
+
         #region IDisposable Members
 
         /// <summary>

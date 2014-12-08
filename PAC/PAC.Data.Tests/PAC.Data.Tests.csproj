@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="FunctionalTest.cs" />
     <Compile Include="FunctionalTests\StudentScenarioTests.cs" />
+    <Compile Include="FunctionalTests\TeamScenarioTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
