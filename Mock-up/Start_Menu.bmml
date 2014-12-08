@@ -1,0 +1,23 @@
+<mockup version="1.0" skin="wireframe" fontFace="Balsamiq Sans" measuredW="1129" measuredH="525" mockupW="742" mockupH="503">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="387" y="22" w="742" h="503" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>PlanAChaos</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::MenuBar" x="387" y="48" w="742" h="21" measuredW="189" measuredH="21" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>0</selectedIndex>
+        <text>File%2C%20Edit%2C%20View%2C%20Help</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Calendar" x="437" y="90" w="623" h="390" measuredW="96" measuredH="96" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Menu" x="387" y="68" w="-1" h="-1" measuredW="150" measuredH="172" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hrefs>%2C%2C%2C%2C%2C%2C%2C%2CLogin%26bm%3BLogin.bmml%26bm%3BLogin.bmml%26bm%3BLogin.bmml%2C</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%220%2C175%2C150%2C196%22%20href%3D%22Login.bmml%22%20alt%3D%22Login%22%20id%3D%223%22/%3E</map>
+        <text>Open%2CCTRL+O%0AOpen%20Recent%20%3E%0A---%0Ao%20Option%20One%0AOption%20Two%0A%3D%0Ax%20Toggle%20Item%0A-Disabled%20Item-%0ALogin%0AExit%2CCTRL+Q</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
