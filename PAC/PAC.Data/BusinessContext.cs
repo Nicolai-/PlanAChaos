@@ -104,18 +104,6 @@ namespace PAC.Data
 
         #endregion
 
-        #region CourseLogic
-
-        public void AddNewCourse(Course course)
-        {
-            Check.Require(course.CourseDesription);
-            Check.Require(course.CourseName);
-            context.Courses.Add(course);
-            context.SaveChanges();
-        }
-
-        #endregion
-
         #region TeamInstanceCourseLogic
 
         public void AddNewTeamInstanceCourse(TeamInstanceCourse teamInstanceCourse)
