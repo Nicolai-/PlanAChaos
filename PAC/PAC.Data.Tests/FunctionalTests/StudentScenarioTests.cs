@@ -9,7 +9,7 @@ using PAC.Data.Model;
 namespace PAC.Data.Tests.FunctionalTests
 {
     [TestClass]
-    public class StudentScenarioTests
+    public class StudentScenarioTests : FunctionalTest
     {
 
         [TestMethod]
