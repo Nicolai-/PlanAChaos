@@ -1,4 +1,5 @@
-﻿using PAC.Data;
+﻿using System.Runtime.InteropServices;
+using PAC.Data;
 using PAC.Data.Model;
 using PAC.Windows;
 using System;
@@ -22,6 +23,7 @@ namespace PAC.DesktopClient.ViewModels
         public ICollection<Student> Students { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Company { get; set; }
 
 
         public bool IsValid
@@ -37,19 +39,20 @@ namespace PAC.DesktopClient.ViewModels
         {
             get
             {
-                return new ActionCommand(p => AddStudent(FirstName, LastName),
-                                         p => IsValid);
+                return new ActionCommand(s => AddStudent(FirstName, LastName, Company),
+                                         s => IsValid);
             }
         }
 
-        private void AddStudent(string firstName, string lastName)
+        private void AddStudent(string firstName, string lastName, string company)
         {
             using (var api = new BusinessContext())
             {
                 var student = new Student
                 {
                     FirstName = firstName,
-                    LastName = lastName
+                    LastName = lastName,
+                    Company = company
                 };
 
                 try
@@ -64,5 +67,39 @@ namespace PAC.DesktopClient.ViewModels
                 Students.Add(student);
             }
         }
+
+        public ActionCommand EditStudentCommand
+        {
+            get
+            {
+                return new ActionCommand(s => EditStudent(FirstName, LastName, Company),
+                                         s => IsValid);
+            }
+        }
+
+        private void EditStudent(string firstName, string lastName, string company)
+        {
+            using (var api = new BusinessContext())
+            {
+                var student = new Student
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Company = company
+                };
+
+                try
+                {
+                    api.EditStudent(student);
+                }
+                catch (Exception)
+                {
+                    // TODO: In Later session, cover error handling
+                    return;
+                }
+            }
+        }
+
+
     }
 }
