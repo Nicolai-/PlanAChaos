@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,11 @@ namespace PAC.Data
 
         #region TeamLogic
 
+        public Team GetTeamById(int? id)
+        {
+            return context.Teams.Find(id);
+        }
+
         public void AddNewTeam(Team team)
         {
             Check.Require(team.TeamName);
@@ -62,6 +68,11 @@ namespace PAC.Data
             context.SaveChanges();
         }
 
+        public void EditTeam(Team team)
+        {
+           context.Entry(team).State = EntityState.Modified;
+           context.SaveChanges();
+        }
         #endregion
 
         #region CourseLogic
@@ -78,6 +89,45 @@ namespace PAC.Data
         #endregion
 
         #region TeamInstanceLogic
+
+        public void AddNewTeamInstance(TeamInstance ti)
+        {
+            Check.Require(ti.TeamInstanceName);
+            context.TeamInstances.Add(ti);
+            context.SaveChanges();
+        }
+
+        public TeamInstance GetTeamInstanceById(int? id)
+        {
+            return context.TeamInstances.Find(id);
+        }
+
+        #endregion
+
+        #region CourseLogic
+
+        public void AddNewCourse(Course course)
+        {
+            Check.Require(course.CourseDesription);
+            Check.Require(course.CourseName);
+            context.Courses.Add(course);
+            context.SaveChanges();
+        }
+
+        #endregion
+
+        #region TeamInstanceCourseLogic
+
+        public void AddNewTeamInstanceCourse(TeamInstanceCourse teamInstanceCourse)
+        {
+            context.TeamInstancesCourses.Add(teamInstanceCourse);
+            context.SaveChanges();
+        }
+
+        public TeamInstanceCourse GetTeamInstanceCourseById(int courseId, int teamInstanceId)
+        {
+            return context.TeamInstancesCourses.Find(courseId, teamInstanceId);
+        }
 
         #endregion
 
