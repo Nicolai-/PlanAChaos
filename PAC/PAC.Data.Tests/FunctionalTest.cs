@@ -18,7 +18,7 @@ namespace PAC.Data.Tests
             {
                 if (db.Database.Exists())
                 {
-                    //db.Database.Delete();
+                    db.Database.Delete();
                 }
             }
         }
@@ -30,7 +30,7 @@ namespace PAC.Data.Tests
             {
                 if (db.Database.Exists())
                 {
-                    //db.Database.Delete();
+                    db.Database.Delete();
                 }
             }
         }

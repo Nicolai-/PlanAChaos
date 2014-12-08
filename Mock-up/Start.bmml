@@ -13,6 +13,6 @@
         <text>File%2C%20Edit%2C%20View%2C%20Help</text>
       </controlProperties>
     </control>
-    <control controlID="2" controlTypeID="com.balsamiq.mockups::Calendar" x="437" y="90" w="623" h="390" measuredW="96" measuredH="96" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Calendar" x="402" y="84" w="712" h="402" measuredW="96" measuredH="96" zOrder="2" locked="false" isInGroup="-1"/>
   </controls>
 </mockup>
