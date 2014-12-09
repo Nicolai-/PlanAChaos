@@ -31,6 +31,11 @@ namespace PAC.Data
 
         #region StudentLogic
 
+        public IQueryable<Student> GetAllStudents()
+        {
+            return context.Students;
+        }
+
         public Student GetStudentById(int? id)
         {
             return context.Students.Find(id);

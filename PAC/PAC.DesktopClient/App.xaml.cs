@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using PAC.DesktopClient.ViewModels;
+using PAC.DesktopClient.Views;
 
 namespace PAC.DesktopClient
 {
@@ -13,5 +15,14 @@ namespace PAC.DesktopClient
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            ApplicationView app = new ApplicationView();
+            ApplicationViewModel context = new ApplicationViewModel();
+            app.DataContext = context;
+            app.Show();
+        }
     }
 }
