@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace PAC.Windows
 {
+
     public class ActionCommand : ICommand
     {
         private readonly Action<Object> action;
@@ -42,6 +43,53 @@ namespace PAC.Windows
         {
 
             action(parameter);
+        }
+
+
+        public void Execute()
+        {
+            Execute(null);
+        }
+    }
+    public class ActionCommand<T> : ICommand
+    {
+        private readonly Action<T> action;
+        private readonly Predicate<T> predicate;
+
+        public ActionCommand(Action<T> action)
+            : this(action, null)
+        {
+        }
+
+        public ActionCommand(Action<T> action, Predicate<T> predicate)
+        {
+            if (action == null)
+            {
+                throw new ArgumentNullException("action", "You must specify an Action<T>.");
+            }
+            this.action = action;
+            this.predicate = predicate;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            if (predicate == null)
+            {
+                return true;
+            }
+            return predicate((T)parameter);
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public void Execute(object parameter)
+        {
+
+            action((T)parameter);
         }
 
 

@@ -1,15 +1,9 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows.Input;
-using PAC.Data;
+﻿using PAC.Data;
 using PAC.Data.Model;
 using PAC.DesktopClient.Views;
 using PAC.Windows;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PAC.DesktopClient.ViewModels
 {
@@ -22,12 +16,14 @@ namespace PAC.DesktopClient.ViewModels
         private string _lastName;
         private string _company;
         private string _success;
+        private Student _selectedStudent = new Student();
+        private MyObservableCollection<Student> _students;
         #endregion
 
         public StudentViewModel()
         {
             childViewModel = this;
-            Students = new ObservableCollection<Student>();
+            _students = new MyObservableCollection<Student>();
             try
             {
                 BusinessContext bc = new BusinessContext();
@@ -44,7 +40,25 @@ namespace PAC.DesktopClient.ViewModels
         }
 
         #region Properties/Commands
-        public ICollection<Student> Students { get; private set; }
+
+        public MyObservableCollection<Student> Students
+        {
+            get { return _students; }
+            set
+            {
+                   _students = value;
+                    NotifyPropertyChanged("Students");
+            }
+        }
+
+        public Student SelectedStudent {
+            get { return _selectedStudent; }
+            set
+            {
+                _selectedStudent = value;
+                NotifyPropertyChanged("SelectedStudent");
+            } 
+        }
 
         public string Name
         {
@@ -127,12 +141,23 @@ namespace PAC.DesktopClient.ViewModels
             }
         }
 
-        public ActionCommand SaveStudentCommand
+        public ActionCommand<Student> SaveStudentCommand
         {
             get
             {
-                return new ActionCommand(s => SaveStudent(FirstName, LastName, Company),
-                                         s => IsValid);
+                return new ActionCommand<Student>(
+                    s => SaveStudent(SelectedStudent),
+                    s => true);
+            }
+        }
+
+        public ActionCommand<Student> DeleteStudentCommand
+        {
+            get
+            {
+                return new ActionCommand<Student>(
+                    s => DeleteStudent(SelectedStudent),
+                    s => true);
             }
         }
 
@@ -184,30 +209,46 @@ namespace PAC.DesktopClient.ViewModels
                     return;
                 }
                 Success = "Student " + FirstName + " " + LastName + " added";
+                Students.Add(student);
             }
         }
 
-        private void SaveStudent(string firstName, string lastName, string company)
+        private void SaveStudent(Student student)
         {
             using (var api = new BusinessContext())
             {
-                var student = new Student
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Company = company
-                };
-
                 try
                 {
-                    api.EditStudent(student);
+                    var tmpStudent = api.GetStudentById(student.Id);
+                    tmpStudent.FirstName = student.FirstName;
+                    tmpStudent.LastName = student.LastName;
+                    tmpStudent.Company = student.Company;
+                    api.EditStudent(tmpStudent);
                 }
                 catch (Exception)
                 {
                     // TODO: In Later session, cover error handling
+                }
+                Success = "Student " + student.FirstName + " " + student.LastName + " saved!";
+                int index = Students.IndexOf(student);
+                Students.ReplaceItem(index, student);
+            }
+        }
+
+        private void DeleteStudent(Student student)
+        {
+            using (var api = new BusinessContext())
+            {
+                try
+                {
+                    var tmpStudent = api.GetStudentById(student.Id);
+                    api.DeleteStudent(tmpStudent);
+                }
+                catch (Exception)
+                {// TODO: In Later session, cover error handling
                     return;
                 }
-                Success = "Student " + FirstName + " " + LastName + " saved!";
+                Students.Remove(student);
             }
         }
 
@@ -216,4 +257,13 @@ namespace PAC.DesktopClient.ViewModels
 
 
     }
+    public class MyObservableCollection<Student> : ObservableCollection<Student>
+    {
+
+        public void ReplaceItem(int index, Student item)
+        {
+            base.SetItem(index, item);
+        }
+
+    } 
 }

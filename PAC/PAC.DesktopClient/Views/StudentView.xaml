@@ -5,35 +5,85 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PAC.DesktopClient.ViewModels"
              xmlns:data="clr-namespace:PAC.Data.Model;assembly=PAC.Data"
+             xmlns:data1="clr-namespace:PAC.Data;assembly=PAC.Data"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <!-- DataTemplate (View) for StudentViewModel -->
         <DataTemplate DataType="{x:Type local:StudentViewModel}"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     </UserControl.Resources>
     <DockPanel Margin="20">
         <DockPanel DockPanel.Dock="Top">
             <Button Content="Create Student" Margin="2,2" 
                         Command="{Binding Path=CreateStudentCommand}" />
-            <Button Content="Edit Student" Margin="2,2" 
-                        Command="{Binding Path=EditStudentCommand}" />
             <Button Content="Delete Student" Margin="2,2" 
                         Command="{Binding Path=DeleteStudentCommand}" />
         </DockPanel>
-        <ListBox ItemsSource="{Binding Students}" DockPanel.Dock="Bottom">
-            <ListBox.Resources>
-                <DataTemplate DataType="{x:Type data:Student}">
-                    <TextBlock>
-                        <Run FontWeight="Bold">First Name:</Run>
-                        <Run Text="{Binding FirstName}"/>
-                        <Run FontWeight="Bold">Last Name:</Run>
-                        <Run Text="{Binding LastName}"/>
-                        <Run FontWeight="Bold">Email:</Run>
-                        <Run Text="{Binding Company}"/>
-                    </TextBlock>
-                </DataTemplate>
-            </ListBox.Resources>
-        </ListBox>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+            <!--  Title  -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Border>
+                    <TextBlock Text="First Name"/>
+                </Border>
+
+                <Border Grid.Column="1">
+                    <TextBlock Text="Last Name" />
+                </Border>
+
+                <Border Grid.Column="2">
+                    <TextBlock Text="Company"/>
+                </Border>
+
+
+            </Grid>
+
+            <ListBox Name="lv"
+                Grid.Row="1" 
+                     Grid.IsSharedSizeScope="True" 
+                     ItemsSource="{Binding Students}" 
+                     SelectedItem="{Binding SelectedStudent}"
+                     DockPanel.Dock="Top"
+                     SelectedIndex="0"
+                     >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="2,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="col1" Width="Auto"/>
+                                <ColumnDefinition SharedSizeGroup="col2" Width="Auto"/>
+                                <ColumnDefinition SharedSizeGroup="col3" Width="Auto"/>
+                                <ColumnDefinition SharedSizeGroup="col4" Width="Auto"/>
+                                <ColumnDefinition SharedSizeGroup="col5" Width="100*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Margin="2,0" Text="{Binding FirstName}"/>
+                            <TextBlock Grid.Column="1" Margin="2,0" Text="{Binding LastName}"/>
+                            <TextBlock Grid.Column="2" Margin="2,0" Text="{Binding Company}"/>
+                            <Button HorizontalAlignment="Right" Grid.Column="3" Content="Edit" Margin="2,0"
+                                    Command="{Binding ElementName=lv,Path=DataContext.EditStudentCommand}" 
+                                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}"
+                                    />
+                            <Button HorizontalAlignment="Right" Grid.Column="4" Content="Delete" Margin="2,0"
+                                    Command="{Binding ElementName=lv,Path=DataContext.DeleteStudentCommand}" 
+                                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}"
+                                    />
+
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
         <ContentControl Margin="10" Content="{Binding Path=CurrentProduct}" />
     </DockPanel>
 

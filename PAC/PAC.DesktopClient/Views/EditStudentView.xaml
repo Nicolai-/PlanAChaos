@@ -22,20 +22,20 @@
 
         <TextBlock Grid.Row="0" Grid.Column="0" Text="First Name" VerticalAlignment="Center" Margin="5"/>
         <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Grid.ColumnSpan="2" 
-                 Text="{Binding FirstName, 
+                 Text="{Binding SelectedStudent.FirstName, 
                             ValidatesOnDataErrors=True, 
                             UpdateSourceTrigger=PropertyChanged}"/>
 
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Last Name" VerticalAlignment="Center" Margin="5"/>
         <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"
-                     Text="{Binding LastName, 
+                     Text="{Binding SelectedStudent.LastName, 
                             ValidatesOnDataErrors=True, 
                             UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Company" VerticalAlignment="Center" Margin="5"/>
         <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"
-                     Text="{Binding Company}"/>
+                     Text="{Binding SelectedStudent.Company}"/>
 
         <Button Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" MinHeight="20" MinWidth="80" Margin="5" Content="Save Student" 
                 Command="{Binding SaveStudentCommand}"/>
