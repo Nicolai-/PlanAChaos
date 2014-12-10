@@ -69,6 +69,11 @@ namespace PAC.Data
 
         #region TeacherLogic
 
+        public IQueryable<Teacher> GetAllTeachers()
+        {
+            return context.Teachers;
+        }
+
         public Teacher GetTeacherById(int? id)
         {
             return context.Teachers.Find(id);

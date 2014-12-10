@@ -11,6 +11,9 @@
         <DataTemplate DataType="{x:Type local:StudentViewModel}">
             <views:StudentView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type local:TeacherViewModel}">
+            <views:TeacherView />
+        </DataTemplate>
     </Window.Resources>
 
     <DockPanel>
