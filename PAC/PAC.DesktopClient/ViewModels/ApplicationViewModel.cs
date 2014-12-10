@@ -8,7 +8,7 @@ using PAC.Windows;
 
 namespace PAC.DesktopClient.ViewModels
 {
-    public class ApplicationViewModel : ViewModel
+    public class ApplicationViewModel : ViewModel 
     {
         #region Fields
 
@@ -24,6 +24,7 @@ namespace PAC.DesktopClient.ViewModels
             // Add available pages
             PageViewModels.Add(new HomeViewModel());
             PageViewModels.Add(new StudentViewModel());
+            PageViewModels.Add(new TeacherViewModel());
 
             // Set starting page
             CurrentPageViewModel = PageViewModels[0];
