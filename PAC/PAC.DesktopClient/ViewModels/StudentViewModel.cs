@@ -257,13 +257,5 @@ namespace PAC.DesktopClient.ViewModels
 
 
     }
-    public class MyObservableCollection<Student> : ObservableCollection<Student>
-    {
 
-        public void ReplaceItem(int index, Student item)
-        {
-            base.SetItem(index, item);
-        }
-
-    } 
 }

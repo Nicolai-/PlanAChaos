@@ -21,14 +21,14 @@ namespace PAC.DesktopClient.ViewModels
         private string _firstName;
         private string _lastName;
         private string _success;
-        private ICollection<Teacher> _Teachers;
+        private MyObservableCollection<Teacher> _teachers;
      
         #endregion
 
          public TeacherViewModel()
         {
             childViewModel = this;
-            Teachers = new ObservableCollection<Teacher>();
+            _teachers = new MyObservableCollection<Teacher>();
             try
             {
                 BusinessContext bc = new BusinessContext();
@@ -45,11 +45,11 @@ namespace PAC.DesktopClient.ViewModels
         }
 
          #region Properties/Commands
-         public ICollection<Teacher> Teachers{
-             get { return _Teachers; }
-             private set
+         public MyObservableCollection<Teacher> Teachers{
+             get { return _teachers; }
+             set
              {
-                 _Teachers = value;
+                 _teachers = value;
                  NotifyPropertyChanged("Teachers");
              } 
          }
@@ -179,6 +179,7 @@ namespace PAC.DesktopClient.ViewModels
                      return;
                  }
                  Success = "Teacher " + FirstName + " " + LastName + " added";
+                 Teachers.Add(teacher);
              }
          }
 
