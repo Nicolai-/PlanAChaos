@@ -57,7 +57,23 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\StudentViewModel.cs" />
+    <Compile Include="Views\ApplicationView.xaml.cs">
+      <DependentUpon>ApplicationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateStudentView.xaml.cs">
+      <DependentUpon>CreateStudentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditStudentView.xaml.cs">
+      <DependentUpon>EditStudentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StudentView.xaml.cs">
+      <DependentUpon>StudentView.xaml</DependentUpon>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -88,7 +104,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <Page Include="Views\ApplicationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateStudentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditStudentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StudentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PAC.Data\PAC.Data.csproj">

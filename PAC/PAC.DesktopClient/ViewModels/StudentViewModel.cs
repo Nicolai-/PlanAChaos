@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
+using System.Windows.Input;
 using PAC.Data;
 using PAC.Data.Model;
+using PAC.DesktopClient.Views;
 using PAC.Windows;
 using System;
 using System.Collections.Generic;
@@ -12,26 +14,98 @@ using System.Threading.Tasks;
 namespace PAC.DesktopClient.ViewModels
 {
 
-    public class StudentViewModel : ViewModel
+    public class StudentViewModel : ViewModel, IPageViewModel
     {
+        #region Fields
+        private StudentViewModel childViewModel;
+        private string _firstName;
+        private string _lastName;
+        private string _company;
+        private string _success;
+        #endregion
 
         public StudentViewModel()
         {
+            childViewModel = this;
             Students = new ObservableCollection<Student>();
+            try
+            {
+                BusinessContext bc = new BusinessContext();
+                foreach (Student student in bc.GetAllStudents())
+                {
+                    Students.Add(student);
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+
         }
 
-        public ICollection<Student> Students { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Company { get; set; }
+        #region Properties/Commands
+        public ICollection<Student> Students { get; private set; }
 
+        public string Name
+        {
+            get { return "Student"; }
+        }
 
-        public bool IsValid
+        public string Success
+        {
+            get { return _success; }
+            set
+            {
+                _success = value;
+                NotifyPropertyChanged("Success");
+            }
+        }
+
+        public string FirstName
+        {
+            get { return _firstName; }
+            set
+            {
+                if (value != _firstName)
+                {
+                    _firstName = value;
+                    NotifyPropertyChanged("FirstName");
+                }
+            }
+        }
+
+        public string LastName
+        {
+            get { return _lastName; }
+            set
+            {
+                if (value != _lastName)
+                {
+                    _lastName = value;
+                    NotifyPropertyChanged("LastName");
+                }
+            }
+        }
+
+        public string Company
+        {
+            get { return _company; }
+            set
+            {
+                if (value != _company)
+                {
+                    _company = value;
+                    NotifyPropertyChanged("Company");
+                }
+            }
+        }
+        
+        public ActionCommand CreateStudentCommand
         {
             get
             {
-                return !String.IsNullOrWhiteSpace(FirstName) &&
-                       !String.IsNullOrWhiteSpace(LastName);
+                return new ActionCommand(s => CreateStudent()
+                    ,s => true);
             }
         }
 
@@ -42,6 +116,51 @@ namespace PAC.DesktopClient.ViewModels
                 return new ActionCommand(s => AddStudent(FirstName, LastName, Company),
                                          s => IsValid);
             }
+        }
+
+        public ActionCommand EditStudentCommand
+        {
+            get
+            {
+                return new ActionCommand(s => EditStudent(),
+                                         s => true);
+            }
+        }
+
+        public ActionCommand SaveStudentCommand
+        {
+            get
+            {
+                return new ActionCommand(s => SaveStudent(FirstName, LastName, Company),
+                                         s => IsValid);
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public bool IsValid
+        {
+            get
+            {
+                return !String.IsNullOrWhiteSpace(FirstName) &&
+                       !String.IsNullOrWhiteSpace(LastName);
+            }
+        }
+
+        private void CreateStudent()
+        {
+            CreateStudentView view = new CreateStudentView();
+            view.DataContext = childViewModel;
+            view.Show();
+        }
+
+        private void EditStudent()
+        {
+            EditStudentView view = new EditStudentView();
+            view.DataContext = childViewModel;
+            view.ShowDialog();
         }
 
         private void AddStudent(string firstName, string lastName, string company)
@@ -64,20 +183,11 @@ namespace PAC.DesktopClient.ViewModels
                     // TODO: In Later session, cover error handling
                     return;
                 }
-                Students.Add(student);
+                Success = "Student " + FirstName + " " + LastName + " added";
             }
         }
 
-        public ActionCommand EditStudentCommand
-        {
-            get
-            {
-                return new ActionCommand(s => EditStudent(FirstName, LastName, Company),
-                                         s => IsValid);
-            }
-        }
-
-        private void EditStudent(string firstName, string lastName, string company)
+        private void SaveStudent(string firstName, string lastName, string company)
         {
             using (var api = new BusinessContext())
             {
@@ -97,8 +207,12 @@ namespace PAC.DesktopClient.ViewModels
                     // TODO: In Later session, cover error handling
                     return;
                 }
+                Success = "Student " + FirstName + " " + LastName + " saved!";
             }
         }
+
+        #endregion
+
 
 
     }

@@ -8,6 +8,7 @@ namespace PAC.Windows
 {
     public abstract class ViewModel : ObservableObject, IDataErrorInfo
     {
+
         /// <summary>
         /// Gets the validation error for a property whose name matches the specified <see cref="columnName"/>.
         /// </summary>
