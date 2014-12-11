@@ -20,7 +20,8 @@
             <Button Content="Delete Teacher" Margin="2,2" 
                         Command="{Binding Path=DeleteTeacherCommand}" />
         </DockPanel>
-        <ListBox ItemsSource="{Binding Teachers}" DockPanel.Dock="Bottom">
+        <ListBox ItemsSource="{Binding Teachers}" SelectedItem="{Binding SelectedTeacher}"
+            DockPanel.Dock="Bottom">
             <ListBox.Resources>
                 <DataTemplate DataType="{x:Type data:Teacher}">
                     <TextBlock>

@@ -14,6 +14,7 @@ namespace PAC.DesktopClient.ViewModels
         private string _lastName;
         private string _success;
         private MyObservableCollection<Teacher> _teachers;
+        private Teacher _selectedTeacher = new Teacher();
      
         #endregion
 
@@ -46,6 +47,15 @@ namespace PAC.DesktopClient.ViewModels
              } 
          }
 
+         public Teacher SelectedTeacher
+         {
+             get { return _selectedTeacher; }
+             set
+             {
+                 _selectedTeacher = value;
+                 NotifyPropertyChanged("SelectedTeacher");
+             }
+         }
          public string Name
          {
              get { return "Teacher"; }
@@ -105,21 +115,33 @@ namespace PAC.DesktopClient.ViewModels
              }
          }
 
-         public ActionCommand EditTeacherCommand
+         public ActionCommand<Teacher> EditTeacherCommand
          {
              get
              {
-                 return new ActionCommand(s => EditTeacher(),
-                                          s => true);
+                 return new ActionCommand<Teacher>(
+                      s => EditTeacher(),
+                      s => true);
              }
          }
 
-         public ActionCommand SaveTeacherCommand
+         public ActionCommand<Teacher> SaveTeacherCommand
          {
              get
              {
-                 return new ActionCommand(s => SaveTeacher(FirstName, LastName),
-                                          s => IsValid);
+                 return new ActionCommand<Teacher>(
+                      s => SaveTeacher(SelectedTeacher),
+                      s => true);
+             }
+         }
+
+         public ActionCommand<Teacher> DeleteTeacherCommand
+         {
+             get
+             {
+                 return new ActionCommand<Teacher>(
+                      s => DeleteTeacher(SelectedTeacher),
+                      s => true);
              }
          }
 
@@ -172,29 +194,44 @@ namespace PAC.DesktopClient.ViewModels
              }
          }
 
-         private void SaveTeacher(string firstName, string lastName)
+         private void SaveTeacher(Teacher teacher)
          {
              using (var api = new BusinessContext())
              {
-                 var teacher = new Teacher
-                 {
-                     FirstName = firstName,
-                     LastName = lastName,
-                     
-                 };
-
                  try
                  {
-                     api.EditTeacher(teacher);
+                     var tmpTeacher = api.GetTeacherById(teacher.Id);
+                     tmpTeacher.FirstName = teacher.FirstName;
+                     tmpTeacher.LastName = teacher.LastName;
+                     
+                     api.EditTeacher(tmpTeacher);
                  }
                  catch (Exception)
                  {
                      // TODO: Cover error handling
                  }
-                 Success = "Teacher " + FirstName + " " + LastName + " saved!";
+                 Success = "Teacher " + teacher.FirstName + " " + teacher.LastName + " saved!";
+                 int index = Teachers.IndexOf(teacher);
+                 Teachers.ReplaceItem(index, teacher);
              }
          }
 
+         private void DeleteTeacher(Teacher teacher)
+         {
+             using (var api = new BusinessContext())
+             {
+                 try
+                 {
+                     var tmpTeacher = api.GetTeacherById(teacher.Id);
+                     api.DeleteTeacher(tmpTeacher);
+                 }
+                 catch (Exception)
+                 {
+                     // TODO: Cover error handling
+                 }
+                 Teachers.Remove(teacher);
+             }
+         }
          #endregion
 
 
