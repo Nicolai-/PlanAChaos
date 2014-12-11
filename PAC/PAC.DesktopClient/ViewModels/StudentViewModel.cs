@@ -288,6 +288,8 @@ namespace PAC.DesktopClient.ViewModels
         {
             var view = new CreateStudentView { DataContext = this.childViewModel };
             view.Show();
+            //TODO : Close child window on button press in view
+
         }
 
         /// <summary>
@@ -297,6 +299,8 @@ namespace PAC.DesktopClient.ViewModels
         {
             var view = new EditStudentView { DataContext = this.childViewModel };
             view.ShowDialog();
+            //TODO : Close child window on button press in view
+
         }
 
         /// <summary>
