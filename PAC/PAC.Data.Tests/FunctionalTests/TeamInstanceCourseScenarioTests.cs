@@ -26,7 +26,7 @@ namespace PAC.Data.Tests.FunctionalTests
                 var course = new Course
                 {
                     CourseName = "Programmering IV",
-                    CourseDesription = "WPF, EF, MVVM, C#, .NET",
+                    CourseDescription = "WPF, EF, MVVM, C#, .NET",
                     CourseLength = 2
                 };
                 bc.AddNewCourse(course);
@@ -48,7 +48,7 @@ namespace PAC.Data.Tests.FunctionalTests
                             tic.TeamInstanceId == teamInstanceCourse.TeamInstanceId);
                 Assert.IsTrue(ticExists);
 
-                Assert.AreEqual("WPF, EF, MVVM, C#, .NET", bc.GetTeamInstanceCourseById(teamInstanceCourse.CourseId, teamInstanceCourse.TeamInstanceId).Course.CourseDesription);
+                Assert.AreEqual("WPF, EF, MVVM, C#, .NET", bc.GetTeamInstanceCourseById(teamInstanceCourse.CourseId, teamInstanceCourse.TeamInstanceId).Course.CourseDescription);
             }
         }
     }

@@ -1,162 +1,267 @@
-﻿using PAC.Data;
-using PAC.Data.Model;
-using PAC.DesktopClient.Views;
-using PAC.Windows;
-using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StudentViewModel.cs" company="J.N Systems">
+//   .
+// </copyright>
+// <summary>
+//   Defines the StudentViewModel type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace PAC.DesktopClient.ViewModels
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
 
+    using PAC.Data;
+    using PAC.Data.Model;
+    using PAC.DesktopClient.Views;
+    using PAC.Windows;
+
+    /// <summary>
+    /// The student view model.
+    /// </summary>
     public class StudentViewModel : ViewModel, IPageViewModel
     {
         #region Fields
-        private StudentViewModel childViewModel;
-        private string _firstName;
-        private string _lastName;
-        private string _company;
-        private string _success;
-        private Student _selectedStudent = new Student();
-        private MyObservableCollection<Student> _students;
+
+        /// <summary>
+        /// The child view model.
+        /// </summary>
+        private readonly StudentViewModel childViewModel;
+
+        /// <summary>
+        /// The first name.
+        /// </summary>
+        private string firstName;
+
+        /// <summary>
+        /// The last name.
+        /// </summary>
+        private string lastName;
+
+        /// <summary>
+        /// The company.
+        /// </summary>
+        private string company;
+
+        /// <summary>
+        /// The success.
+        /// </summary>
+        private string success;
+
+        /// <summary>
+        /// The selected student.
+        /// </summary>
+        private Student selectedStudent = new Student();
+
+        /// <summary>
+        /// The students list.
+        /// </summary>
+        private MyObservableCollection<Student> students;
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StudentViewModel"/> class.
+        /// It fetches all Students from the database and makes them visible for the view through the Students property
+        /// which is a MyObservableCollection.
+        /// </summary>
         public StudentViewModel()
         {
-            childViewModel = this;
-            _students = new MyObservableCollection<Student>();
+            this.childViewModel = this;
+            this.students = new MyObservableCollection<Student>();
             try
             {
                 var bc = new BusinessContext();
-                foreach (Student student in bc.GetAllStudents())
+                foreach (var student in bc.GetAllStudents())
                 {
-                    Students.Add(student);
+                    this.Students.Add(student);
                 }
             }
             catch (Exception)
             {
                 // TODO: Cover error handling
             }
-
         }
 
         #region Properties/Commands
 
+        /// <summary>
+        /// Gets or sets the students.
+        /// </summary>
         public MyObservableCollection<Student> Students
         {
-            get { return _students; }
+            get
+            {
+                return this.students;
+            }
+
             set
             {
-                   _students = value;
-                    NotifyPropertyChanged("Students");
+                this.students = value;
+                    this.NotifyPropertyChanged();
             }
         }
 
-        public Student SelectedStudent {
-            get { return _selectedStudent; }
+        /// <summary>
+        /// Gets or sets the selected student.
+        /// </summary>
+        public Student SelectedStudent
+        {
+            get
+            {
+                return this.selectedStudent;
+            }
+
             set
             {
-                _selectedStudent = value;
-                NotifyPropertyChanged("SelectedStudent");
+                this.selectedStudent = value;
+                this.NotifyPropertyChanged();
             } 
         }
 
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
         public string Name
         {
             get { return "Student"; }
         }
 
+        /// <summary>
+        /// Gets or sets the success.
+        /// </summary>
         public string Success
         {
-            get { return _success; }
+            get
+            {
+                return this.success;
+            }
+           
             set
             {
-                _success = value;
-                NotifyPropertyChanged("Success");
+                this.success = value;
+                this.NotifyPropertyChanged();
             }
         }
 
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
         public string FirstName
         {
-            get { return _firstName; }
+            get
+            {
+                return this.firstName;
+            }
+
             set
             {
-                if (value != _firstName)
+                if (value != this.firstName)
                 {
-                    _firstName = value;
-                    NotifyPropertyChanged("FirstName");
+                    this.firstName = value;
+                    this.NotifyPropertyChanged();
                 }
             }
         }
 
+        /// <summary>
+        /// Gets or sets the last name.
+        /// </summary>
         public string LastName
         {
-            get { return _lastName; }
+            get
+            {
+                return this.lastName;
+            }
+
             set
             {
-                if (value != _lastName)
+                if (value == this.lastName)
                 {
-                    _lastName = value;
-                    NotifyPropertyChanged("LastName");
+                    return;
                 }
+
+                this.lastName = value;
+                this.NotifyPropertyChanged();
             }
         }
 
+        /// <summary>
+        /// Gets or sets the company.
+        /// </summary>
         public string Company
         {
-            get { return _company; }
+            get
+            {
+                return this.company;
+            }
+
             set
             {
-                if (value != _company)
+                if (value == this.company)
                 {
-                    _company = value;
-                    NotifyPropertyChanged("Company");
+                    return;
                 }
+
+                this.company = value;
+                this.NotifyPropertyChanged();
             }
         }
-        
+
+        /// <summary>
+        /// Gets the create student command accessible from the view.
+        /// </summary>
         public ActionCommand CreateStudentCommand
         {
             get
             {
-                return new ActionCommand(s => CreateStudent()
-                    ,s => true);
+                return new ActionCommand(s => this.CreateStudent());
             }
         }
 
+        /// <summary>
+        /// Gets the add student command accessible from the view.
+        /// </summary>
         public ActionCommand AddStudentCommand
         {
             get
             {
-                return new ActionCommand(s => AddStudent(FirstName, LastName, Company),
-                                         s => IsValid);
+                return new ActionCommand(s => this.AddStudent(this.FirstName, this.LastName, this.Company), s => this.IsValid);
             }
         }
 
+        /// <summary>
+        /// Gets the edit student command accessible from the view.
+        /// </summary>
         public ActionCommand EditStudentCommand
         {
             get
             {
-                return new ActionCommand(s => EditStudent(),
-                                         s => true);
+                return new ActionCommand(s => this.EditStudent());
             }
         }
 
+        /// <summary>
+        /// Gets the save student command accessible from the view.
+        /// </summary>
         public ActionCommand<Student> SaveStudentCommand
         {
             get
             {
                 return new ActionCommand<Student>(
-                    s => SaveStudent(SelectedStudent),
-                    s => true);
+                    s => this.SaveStudent(this.SelectedStudent));
             }
         }
 
+        /// <summary>
+        /// Gets the delete student command accessible from the view.
+        /// </summary>
         public ActionCommand<Student> DeleteStudentCommand
         {
             get
             {
                 return new ActionCommand<Student>(
-                    s => DeleteStudent(SelectedStudent),
-                    s => true);
+                    s => this.DeleteStudent(this.SelectedStudent));
             }
         }
 
@@ -164,36 +269,58 @@ namespace PAC.DesktopClient.ViewModels
 
         #region Methods
 
+        /// <summary>
+        /// Gets a value indicating whether is valid.
+        /// </summary>
         public bool IsValid
         {
+            [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1121:UseBuiltInTypeAlias", Justification = "Reviewed. Suppression is OK here.")]
             get
             {
-                return !String.IsNullOrWhiteSpace(FirstName) &&
-                       !String.IsNullOrWhiteSpace(LastName);
+                return !String.IsNullOrWhiteSpace(this.FirstName) &&
+                       !String.IsNullOrWhiteSpace(this.LastName);
             }
         }
 
+        /// <summary>
+        /// The command to launch the CreateStudentView
+        /// </summary>
         private void CreateStudent()
         {
-            var view = new CreateStudentView {DataContext = childViewModel};
+            var view = new CreateStudentView { DataContext = this.childViewModel };
             view.Show();
         }
 
+        /// <summary>
+        /// The command to launch the EditStudentView
+        /// </summary>
         private void EditStudent()
         {
-            var view = new EditStudentView {DataContext = childViewModel};
+            var view = new EditStudentView { DataContext = this.childViewModel };
             view.ShowDialog();
         }
 
-        private void AddStudent(string firstName, string lastName, string company)
+        /// <summary>
+        /// The add student.
+        /// </summary>
+        /// <param name="studentFirstName">
+        /// The first name.
+        /// </param>
+        /// <param name="studentLastName">
+        /// The last name.
+        /// </param>
+        /// <param name="studentCompany">
+        /// The studentCompany.
+        /// </param>
+        private void AddStudent(string studentFirstName, string studentLastName, string studentCompany)
         {
             using (var api = new BusinessContext())
             {
                 var student = new Student
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Company = company
+                    FirstName = studentFirstName,
+                    LastName = studentLastName,
+                    Company = studentCompany
                 };
 
                 try
@@ -204,11 +331,19 @@ namespace PAC.DesktopClient.ViewModels
                 {
                     // TODO: Cover error handling
                 }
-                Success = "Student " + FirstName + " " + LastName + " added";
-                Students.Add(student);
+
+                this.Success = "Student " + this.FirstName + " " + this.LastName + " added";
+                this.Students.Add(student);
             }
         }
 
+        /// <summary>
+        /// The method for saving changes to an entity
+        /// It will locate the existing entity and do the changes and save.
+        /// </summary>
+        /// <param name="student">
+        /// The student.
+        /// </param>
         private void SaveStudent(Student student)
         {
             using (var api = new BusinessContext())
@@ -225,12 +360,20 @@ namespace PAC.DesktopClient.ViewModels
                 {
                     // TODO: Cover error handling
                 }
-                Success = "Student " + student.FirstName + " " + student.LastName + " saved!";
-                int index = Students.IndexOf(student);
-                Students.ReplaceItem(index, student);
+
+                this.Success = "Student " + student.FirstName + " " + student.LastName + " saved!";
+                int index = this.Students.IndexOf(student);
+                this.Students.ReplaceItem(index, student);
             }
         }
 
+        /// <summary>
+        /// The delete student.
+        /// Locates the existing student and deletes it.
+        /// </summary>
+        /// <param name="student">
+        /// The student.
+        /// </param>
         private void DeleteStudent(Student student)
         {
             using (var api = new BusinessContext())
@@ -244,14 +387,11 @@ namespace PAC.DesktopClient.ViewModels
                 {
                     // TODO: Cover error handling
                 }
-                Students.Remove(student);
+
+                this.Students.Remove(student);
             }
         }
 
         #endregion
-
-
-
     }
-
 }

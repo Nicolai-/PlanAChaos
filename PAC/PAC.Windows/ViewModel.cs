@@ -1,13 +1,33 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ViewModel.cs" company="J.N Systems">
+//   .
+// </copyright>
+// <summary>
+//   The view model.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace PAC.Windows
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
+    /// <summary>
+    /// The view model.
+    /// </summary>
     public abstract class ViewModel : ObservableObject, IDataErrorInfo
     {
+        /// <summary>
+        /// Gets. Not supported.
+        /// </summary>
+        [Obsolete]
+        public string Error
+        {
+            get { throw new NotSupportedException(); }
+        }
 
         /// <summary>
         /// Gets the validation error for a property whose name matches the specified <see cref="columnName"/>.
@@ -16,16 +36,7 @@ namespace PAC.Windows
         /// <returns>Returns a validation error if there is one, otherwise returns null.</returns>
         public string this[string columnName]
         {
-            get { return OnValidate(columnName); }
-        }
-
-        /// <summary>
-        /// Not supported.
-        /// </summary>
-        [Obsolete]
-        public string Error
-        {
-            get { throw new NotSupportedException(); }
+            get { return this.OnValidate(columnName); }
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace PAC.Data.Tests.FunctionalTests
                   {
                       CourseName = "Programming",
                       CourseLength = 1,
-                      CourseDesription = "dette er programmering"
+                      CourseDescription = "dette er programmering"
 
                   };
                 bc.AddNewCourse(course);
