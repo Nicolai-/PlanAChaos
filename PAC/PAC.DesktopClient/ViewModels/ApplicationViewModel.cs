@@ -12,7 +12,7 @@ namespace PAC.DesktopClient.ViewModels
     {
         #region Fields
 
-        private ICommand _changePageCommand;
+        private ActionCommand _changePageCommand;
 
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
@@ -38,7 +38,7 @@ namespace PAC.DesktopClient.ViewModels
         /// <summary>
         /// Gets the change page command.
         /// </summary>
-        public ICommand ChangePageCommand
+        public ActionCommand ChangePageCommand
         {
             get
             {

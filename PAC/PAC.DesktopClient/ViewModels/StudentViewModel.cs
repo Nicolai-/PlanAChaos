@@ -265,10 +265,6 @@ namespace PAC.DesktopClient.ViewModels
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Gets a value indicating whether is valid.
         /// </summary>
@@ -281,6 +277,9 @@ namespace PAC.DesktopClient.ViewModels
                        !String.IsNullOrWhiteSpace(this.LastName);
             }
         }
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// The command to launch the CreateStudentView

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TeacherViewModel.cs" company="J.N systems">
+// <copyright file="TeacherViewModel.cs" company="J.N Systems">
 //   .
 // </copyright>
 // <summary>
@@ -240,23 +240,22 @@ namespace PAC.DesktopClient.ViewModels
              }
          }
 
-         #endregion
-
-         #region Methods
-
         /// <summary>
         /// Gets a value indicating whether is valid.
         /// </summary>
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1404:CodeAnalysisSuppressionMustHaveJustification", Justification = "Reviewed. Suppression is OK here.")]
         public bool IsValid
-         {
+        {
             [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1121:UseBuiltInTypeAlias", Justification = "Reviewed. Suppression is OK here.")]
             get
-             {
-              return !String.IsNullOrWhiteSpace(this.FirstName) &&
-                        !String.IsNullOrWhiteSpace(this.LastName);
-             }
-         }
+            {
+                return !String.IsNullOrWhiteSpace(this.FirstName) &&
+                          !String.IsNullOrWhiteSpace(this.LastName);
+            }
+        }
+         #endregion
+
+         #region Methods
 
         /// <summary>
         /// The create teacher.
@@ -315,10 +314,9 @@ namespace PAC.DesktopClient.ViewModels
         /// <param name="teacher">
         /// The teacher.
         /// </param>
-        
         private void SaveTeacher(Teacher teacher)
-         {
-             using (var api = new BusinessContext())
+        {
+            using (var api = new BusinessContext())
              {
                  try
                  {
