@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using PAC.DesktopClient.ViewModels;
 using PAC.DesktopClient.Views;
 
@@ -19,8 +13,8 @@ namespace PAC.DesktopClient
         {
             base.OnStartup(e);
 
-            ApplicationView app = new ApplicationView();
-            ApplicationViewModel context = new ApplicationViewModel();
+            var app = new ApplicationView();
+            var context = new ApplicationViewModel();
             app.DataContext = context;
             app.Show();
         }

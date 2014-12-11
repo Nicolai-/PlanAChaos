@@ -21,14 +21,14 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" Text="First Name" VerticalAlignment="Center" Margin="5"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Grid.ColumnSpan="2" 
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="5"
                  Text="{Binding FirstName, 
                             ValidatesOnDataErrors=True, 
                             UpdateSourceTrigger=PropertyChanged}"/>
 
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Last Name" VerticalAlignment="Center" Margin="5"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5"
                      Text="{Binding LastName, 
                             ValidatesOnDataErrors=True, 
                             UpdateSourceTrigger=PropertyChanged}"/>

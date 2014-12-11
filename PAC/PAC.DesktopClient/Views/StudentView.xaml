@@ -4,8 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PAC.DesktopClient.ViewModels"
-             xmlns:data="clr-namespace:PAC.Data.Model;assembly=PAC.Data"
-             xmlns:data1="clr-namespace:PAC.Data;assembly=PAC.Data"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -49,7 +47,7 @@
 
             </Grid>
 
-            <ListBox Name="lv"
+            <ListBox Name="Lv"
                 Grid.Row="1" 
                      Grid.IsSharedSizeScope="True" 
                      ItemsSource="{Binding Students}" 
@@ -71,11 +69,11 @@
                             <TextBlock Grid.Column="1" Margin="2,0" Text="{Binding LastName}"/>
                             <TextBlock Grid.Column="2" Margin="2,0" Text="{Binding Company}"/>
                             <Button HorizontalAlignment="Right" Grid.Column="3" Content="Edit" Margin="2,0"
-                                    Command="{Binding ElementName=lv,Path=DataContext.EditStudentCommand}" 
+                                    Command="{Binding ElementName=Lv,Path=DataContext.EditStudentCommand}" 
                                     Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}"
                                     />
                             <Button HorizontalAlignment="Right" Grid.Column="4" Content="Delete" Margin="2,0"
-                                    Command="{Binding ElementName=lv,Path=DataContext.DeleteStudentCommand}" 
+                                    Command="{Binding ElementName=Lv,Path=DataContext.DeleteStudentCommand}" 
                                     Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}"
                                     />
 
@@ -84,7 +82,6 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <ContentControl Margin="10" Content="{Binding Path=CurrentProduct}" />
     </DockPanel>
 
 </UserControl>

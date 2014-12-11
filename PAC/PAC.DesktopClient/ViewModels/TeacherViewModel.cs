@@ -1,16 +1,8 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows.Input;
-using PAC.Data;
+﻿using PAC.Data;
 using PAC.Data.Model;
 using PAC.DesktopClient.Views;
 using PAC.Windows;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 
 namespace PAC.DesktopClient.ViewModels
 {
@@ -31,7 +23,7 @@ namespace PAC.DesktopClient.ViewModels
             _teachers = new MyObservableCollection<Teacher>();
             try
             {
-                BusinessContext bc = new BusinessContext();
+                var bc = new BusinessContext();
                 foreach (Teacher teacher in bc.GetAllTeachers())
                 {
                     Teachers.Add(teacher);
@@ -39,7 +31,7 @@ namespace PAC.DesktopClient.ViewModels
             }
             catch (Exception)
             {
-                return;
+                // TODO: Cover error handling
             }
 
         }
@@ -146,15 +138,13 @@ namespace PAC.DesktopClient.ViewModels
 
          private void CreateTeacher()
          {
-             CreateTeacherView view = new CreateTeacherView();
-             view.DataContext = childViewModel;
+             var view = new CreateTeacherView {DataContext = childViewModel};
              view.Show();
          }
 
          private void EditTeacher()
          {
-             EditTeacherView view = new EditTeacherView();
-             view.DataContext = childViewModel;
+             var view = new EditTeacherView {DataContext = childViewModel};
              view.ShowDialog();
          }
 
@@ -175,8 +165,7 @@ namespace PAC.DesktopClient.ViewModels
                  }
                  catch (Exception)
                  {
-                     // TODO: In Later session, cover error handling
-                     return;
+                     // TODO: Cover error handling
                  }
                  Success = "Teacher " + FirstName + " " + LastName + " added";
                  Teachers.Add(teacher);
@@ -200,8 +189,7 @@ namespace PAC.DesktopClient.ViewModels
                  }
                  catch (Exception)
                  {
-                     // TODO: In Later session, cover error handling
-                     return;
+                     // TODO: Cover error handling
                  }
                  Success = "Teacher " + FirstName + " " + LastName + " saved!";
              }

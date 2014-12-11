@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PAC.Data.Model;
 
 namespace PAC.Data
 {
     public sealed class BusinessContext : IDisposable
     {
-        private readonly DataContext context;
-        private bool disposed;
+        private readonly DataContext _context;
+        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessContext"/> class.
         /// </summary>
         public BusinessContext()
         {
-            context = new DataContext();
+            _context = new DataContext();
         }
 
         /// <summary>
@@ -26,19 +23,19 @@ namespace PAC.Data
         /// </summary>
         public DataContext DataContext
         {
-            get { return context; }
+            get { return _context; }
         }
 
         #region StudentLogic
 
         public IQueryable<Student> GetAllStudents()
         {
-            return context.Students;
+            return _context.Students;
         }
 
         public Student GetStudentById(int? id)
         {
-            return context.Students.Find(id);
+            return _context.Students.Find(id);
         }
 
         public void AddNewStudent(Student student)
@@ -46,8 +43,8 @@ namespace PAC.Data
             Check.Require(student.FirstName);
             Check.Require(student.LastName);
 
-            context.Students.Add(student);
-            context.SaveChanges();
+            _context.Students.Add(student);
+            _context.SaveChanges();
         }
 
         public void EditStudent(Student student)
@@ -55,14 +52,14 @@ namespace PAC.Data
             Check.Require(student.FirstName);
             Check.Require(student.LastName);
 
-            context.Entry(student).State = EntityState.Modified;
-            context.SaveChanges();
+            _context.Entry(student).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void DeleteStudent(Student student)
         {
-            context.Students.Remove(student);
-            context.SaveChanges();
+            _context.Students.Remove(student);
+            _context.SaveChanges();
         }
 
         #endregion
@@ -71,12 +68,12 @@ namespace PAC.Data
 
         public IQueryable<Teacher> GetAllTeachers()
         {
-            return context.Teachers;
+            return _context.Teachers;
         }
 
         public Teacher GetTeacherById(int? id)
         {
-            return context.Teachers.Find(id);
+            return _context.Teachers.Find(id);
         }
 
         public void AddNewTeacher(Teacher teacher)
@@ -84,22 +81,22 @@ namespace PAC.Data
             Check.Require(teacher.FirstName);
             Check.Require(teacher.LastName);
 
-            context.Teachers.Add(teacher);
-            context.SaveChanges();
+            _context.Teachers.Add(teacher);
+            _context.SaveChanges();
         }
 
         public void EditTeacher(Teacher teacher)
         {
             Check.Require(teacher.FirstName);
             Check.Require(teacher.LastName);
-            context.Entry(teacher).State = EntityState.Modified;
-            context.SaveChanges();
+            _context.Entry(teacher).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void DeleteTeacher(Teacher teacher)
         {
-            context.Teachers.Remove(teacher);
-            context.SaveChanges();
+            _context.Teachers.Remove(teacher);
+            _context.SaveChanges();
         }
 
         #endregion
@@ -108,29 +105,29 @@ namespace PAC.Data
 
         public Team GetTeamById(int? id)
         {
-            return context.Teams.Find(id);
+            return _context.Teams.Find(id);
         }
 
         public void AddNewTeam(Team team)
         {
             Check.Require(team.TeamName);
 
-            context.Teams.Add(team);
-            context.SaveChanges();
+            _context.Teams.Add(team);
+            _context.SaveChanges();
         }
 
         public void EditTeam(Team team)
         {
             Check.Require(team.TeamName);
 
-           context.Entry(team).State = EntityState.Modified;
-           context.SaveChanges();
+           _context.Entry(team).State = EntityState.Modified;
+           _context.SaveChanges();
         }
 
         public void DeleteTeam(Team team)
         {
-            context.Teams.Remove(team);
-            context.SaveChanges();
+            _context.Teams.Remove(team);
+            _context.SaveChanges();
         }
         #endregion
 
@@ -138,7 +135,7 @@ namespace PAC.Data
 
         public Course GetCourseById(int? id)
         {
-            return context.Courses.Find(id);
+            return _context.Courses.Find(id);
         }
 
         public void AddNewCourse(Course course)
@@ -147,8 +144,8 @@ namespace PAC.Data
             Check.Require(course.CourseLength.ToString());
             Check.Require(course.CourseDesription);
 
-            context.Courses.Add(course);
-            context.SaveChanges();
+            _context.Courses.Add(course);
+            _context.SaveChanges();
         }
 
         public void EditCourse(Course course)
@@ -157,14 +154,14 @@ namespace PAC.Data
             Check.Require(course.CourseLength.ToString());
             Check.Require(course.CourseDesription);
 
-            context.Entry(course).State = EntityState.Modified;
-            context.SaveChanges();
+            _context.Entry(course).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void DeleteCourse(Course course)
         {
-            context.Courses.Remove(course);
-            context.SaveChanges();
+            _context.Courses.Remove(course);
+            _context.SaveChanges();
         }
 
         #endregion
@@ -174,26 +171,26 @@ namespace PAC.Data
         public void AddNewTeamInstance(TeamInstance ti)
         {
             Check.Require(ti.TeamInstanceName);
-            context.TeamInstances.Add(ti);
-            context.SaveChanges();
+            _context.TeamInstances.Add(ti);
+            _context.SaveChanges();
         }
 
         public TeamInstance GetTeamInstanceById(int? id)
         {
-            return context.TeamInstances.Find(id);
+            return _context.TeamInstances.Find(id);
         }
 
         public void EditTeamInstance(TeamInstance ti)
         {
             Check.Require(ti.TeamInstanceName);
-            context.Entry(ti).State = EntityState.Modified;
-            context.SaveChanges();
+            _context.Entry(ti).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void DeleteTeamInstance(TeamInstance ti)
         {
-            context.TeamInstances.Remove(ti);
-            context.SaveChanges();
+            _context.TeamInstances.Remove(ti);
+            _context.SaveChanges();
         }
 
         #endregion
@@ -202,25 +199,25 @@ namespace PAC.Data
 
         public void AddNewTeamInstanceCourse(TeamInstanceCourse teamInstanceCourse)
         {
-            context.TeamInstancesCourses.Add(teamInstanceCourse);
-            context.SaveChanges();
+            _context.TeamInstancesCourses.Add(teamInstanceCourse);
+            _context.SaveChanges();
         }
 
         public TeamInstanceCourse GetTeamInstanceCourseById(int courseId, int teamInstanceId)
         {
-            return context.TeamInstancesCourses.Find(courseId, teamInstanceId);
+            return _context.TeamInstancesCourses.Find(courseId, teamInstanceId);
         }
 
         public void EditTeamInstanceCourse(TeamInstanceCourse teamInstanceCourse)
         {
-            context.Entry(teamInstanceCourse).State = EntityState.Modified;
-            context.SaveChanges();
+            _context.Entry(teamInstanceCourse).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void DeleteTeamInstanceCourse(TeamInstanceCourse teamInstanceCourse)
         {
-            context.TeamInstancesCourses.Remove(teamInstanceCourse);
-            context.SaveChanges();
+            _context.TeamInstancesCourses.Remove(teamInstanceCourse);
+            _context.SaveChanges();
         }
 
         #endregion
@@ -232,7 +229,7 @@ namespace PAC.Data
             {
                 if (value == null)
                     throw new ArgumentNullException();
-                else if (value.Trim().Length == 0)
+                if (value.Trim().Length == 0)
                     throw new ArgumentException();
             }
         }
@@ -250,13 +247,13 @@ namespace PAC.Data
 
         private void Dispose(bool disposing)
         {
-            if (disposed || !disposing)
+            if (_disposed || !disposing)
                 return;
 
-            if (context != null)
-                context.Dispose();
+            if (_context != null)
+                _context.Dispose();
 
-            disposed = true;
+            _disposed = true;
         }
 
         #endregion

@@ -34,7 +34,6 @@
                 </DataTemplate>
             </ListBox.Resources>
         </ListBox>
-        <ContentControl Margin="10" Content="{Binding Path=CurrentProduct}" />
     </DockPanel>
 
 </UserControl>

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PAC.Windows
 {
@@ -27,10 +23,9 @@ namespace PAC.Windows
             {
                 string msg = "Invalid property name: " + propertyName;
 
-                if (this.ThrowOnInvalidPropertyName)
+                if (ThrowOnInvalidPropertyName)
                     throw new Exception(msg);
-                else
-                    Debug.Fail(msg);
+                Debug.Fail(msg);
             }
         }
         /// <summary>
@@ -45,7 +40,7 @@ namespace PAC.Windows
 
         public virtual void RaisePropertyChanged(string propertyName)
         {
-            this.VerifyPropertyName(propertyName);
+            VerifyPropertyName(propertyName);
             NotifyPropertyChanged(propertyName);
         }
         /// <summary>
@@ -59,7 +54,7 @@ namespace PAC.Windows
         /// <param name="propertyName">Optional. The name of the property whose value has changed.</param>
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            this.VerifyPropertyName(propertyName);
+            VerifyPropertyName(propertyName);
             PropertyChangedEventHandler handler = PropertyChanged;
 
             if (handler != null)

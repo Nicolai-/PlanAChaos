@@ -6,8 +6,8 @@ namespace PAC.Windows
 
     public class ActionCommand : ICommand
     {
-        private readonly Action<Object> action;
-        private readonly Predicate<Object> predicate;
+        private readonly Action<Object> _action;
+        private readonly Predicate<Object> _predicate;
 
         public ActionCommand(Action<Object> action)
             : this(action, null)
@@ -20,17 +20,17 @@ namespace PAC.Windows
             {
                 throw new ArgumentNullException("action", "You must specify an Action<T>.");
             }
-            this.action = action;
-            this.predicate = predicate;
+            _action = action;
+            _predicate = predicate;
         }
 
         public bool CanExecute(object parameter)
         {
-            if (predicate == null)
+            if (_predicate == null)
             {
                 return true;
             }
-            return predicate(parameter);
+            return _predicate(parameter);
         }
 
         public event EventHandler CanExecuteChanged
@@ -42,7 +42,7 @@ namespace PAC.Windows
         public void Execute(object parameter)
         {
 
-            action(parameter);
+            _action(parameter);
         }
 
 
@@ -53,8 +53,8 @@ namespace PAC.Windows
     }
     public class ActionCommand<T> : ICommand
     {
-        private readonly Action<T> action;
-        private readonly Predicate<T> predicate;
+        private readonly Action<T> _action;
+        private readonly Predicate<T> _predicate;
 
         public ActionCommand(Action<T> action)
             : this(action, null)
@@ -67,17 +67,17 @@ namespace PAC.Windows
             {
                 throw new ArgumentNullException("action", "You must specify an Action<T>.");
             }
-            this.action = action;
-            this.predicate = predicate;
+            _action = action;
+            _predicate = predicate;
         }
 
         public bool CanExecute(object parameter)
         {
-            if (predicate == null)
+            if (_predicate == null)
             {
                 return true;
             }
-            return predicate((T)parameter);
+            return _predicate((T)parameter);
         }
 
         public event EventHandler CanExecuteChanged
@@ -89,7 +89,7 @@ namespace PAC.Windows
         public void Execute(object parameter)
         {
 
-            action((T)parameter);
+            _action((T)parameter);
         }
 
 

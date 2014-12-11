@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace PAC.Windows.Tests.UnitTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -31,14 +26,14 @@ namespace PAC.Windows.Tests.UnitTests
 
         private class StubObservableObject : ObservableObject
         {
-            private string changedProperty;
+            private string _changedProperty;
 
             public string ChangedProperty
             {
-                get { return this.changedProperty; }
+                get { return _changedProperty; }
                 set
                 {
-                    this.changedProperty = value;
+                    _changedProperty = value;
                     NotifyPropertyChanged();
                 }
             }

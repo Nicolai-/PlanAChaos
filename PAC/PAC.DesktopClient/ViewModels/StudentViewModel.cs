@@ -3,7 +3,6 @@ using PAC.Data.Model;
 using PAC.DesktopClient.Views;
 using PAC.Windows;
 using System;
-using System.Collections.ObjectModel;
 
 namespace PAC.DesktopClient.ViewModels
 {
@@ -26,7 +25,7 @@ namespace PAC.DesktopClient.ViewModels
             _students = new MyObservableCollection<Student>();
             try
             {
-                BusinessContext bc = new BusinessContext();
+                var bc = new BusinessContext();
                 foreach (Student student in bc.GetAllStudents())
                 {
                     Students.Add(student);
@@ -34,7 +33,7 @@ namespace PAC.DesktopClient.ViewModels
             }
             catch (Exception)
             {
-                return;
+                // TODO: Cover error handling
             }
 
         }
@@ -176,15 +175,13 @@ namespace PAC.DesktopClient.ViewModels
 
         private void CreateStudent()
         {
-            CreateStudentView view = new CreateStudentView();
-            view.DataContext = childViewModel;
+            var view = new CreateStudentView {DataContext = childViewModel};
             view.Show();
         }
 
         private void EditStudent()
         {
-            EditStudentView view = new EditStudentView();
-            view.DataContext = childViewModel;
+            var view = new EditStudentView {DataContext = childViewModel};
             view.ShowDialog();
         }
 
@@ -205,8 +202,7 @@ namespace PAC.DesktopClient.ViewModels
                 }
                 catch (Exception)
                 {
-                    // TODO: In Later session, cover error handling
-                    return;
+                    // TODO: Cover error handling
                 }
                 Success = "Student " + FirstName + " " + LastName + " added";
                 Students.Add(student);
@@ -227,7 +223,7 @@ namespace PAC.DesktopClient.ViewModels
                 }
                 catch (Exception)
                 {
-                    // TODO: In Later session, cover error handling
+                    // TODO: Cover error handling
                 }
                 Success = "Student " + student.FirstName + " " + student.LastName + " saved!";
                 int index = Students.IndexOf(student);
@@ -245,8 +241,8 @@ namespace PAC.DesktopClient.ViewModels
                     api.DeleteStudent(tmpStudent);
                 }
                 catch (Exception)
-                {// TODO: In Later session, cover error handling
-                    return;
+                {
+                    // TODO: Cover error handling
                 }
                 Students.Remove(student);
             }
