@@ -1,10 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
-using PAC.Windows;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ApplicationViewModel.cs" company="">
+//   .
+// </copyright>
+// <summary>
+//   The application view model class.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace PAC.DesktopClient.ViewModels
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Input;
+
+    using PAC.Windows;
+
     /// <summary>
     /// The application view model class.
     /// </summary>
@@ -12,10 +22,20 @@ namespace PAC.DesktopClient.ViewModels
     {
         #region Fields
 
-        private ICommand _changePageCommand;
+        /// <summary>
+        /// The change page command.
+        /// </summary>
+        private ICommand changePageCommand;
 
-        private IPageViewModel _currentPageViewModel;
-        private List<IPageViewModel> _pageViewModels;
+        /// <summary>
+        /// The current page view model.
+        /// </summary>
+        private IPageViewModel currentPageViewModel;
+
+        /// <summary>
+        /// The page view models.
+        /// </summary>
+        private List<IPageViewModel> pageViewModels;
 
         #endregion
 
@@ -42,14 +62,14 @@ namespace PAC.DesktopClient.ViewModels
         {
             get
             {
-                if (this._changePageCommand == null)
+                if (this.changePageCommand == null)
                 {
-                    this._changePageCommand = new ActionCommand(
+                    this.changePageCommand = new ActionCommand(
                         p => this.ChangeViewModel((IPageViewModel)p),
                         p => p is IPageViewModel);
                 }
 
-                return this._changePageCommand;
+                return this.changePageCommand;
             }
         }
 
@@ -60,12 +80,12 @@ namespace PAC.DesktopClient.ViewModels
         {
             get
             {
-                if (this._pageViewModels == null)
+                if (this.pageViewModels == null)
                 {
-                    this._pageViewModels = new List<IPageViewModel>();
+                    this.pageViewModels = new List<IPageViewModel>();
                 }
 
-                return this._pageViewModels;
+                return this.pageViewModels;
             }
         }
 
@@ -76,13 +96,13 @@ namespace PAC.DesktopClient.ViewModels
         {
             get
             {
-                return this._currentPageViewModel;
+                return this.currentPageViewModel;
             }
             set
             {
-                if (this._currentPageViewModel != value)
+                if (this.currentPageViewModel != value)
                 {
-                    this._currentPageViewModel = value;
+                    this.currentPageViewModel = value;
                     this.NotifyPropertyChanged("CurrentPageViewModel");
                 }
             }
@@ -101,7 +121,9 @@ namespace PAC.DesktopClient.ViewModels
         private void ChangeViewModel(IPageViewModel viewModel)
         {
             if (!this.PageViewModels.Contains(viewModel))
+            {
                 this.PageViewModels.Add(viewModel);
+            }
 
             this.CurrentPageViewModel = this.PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
