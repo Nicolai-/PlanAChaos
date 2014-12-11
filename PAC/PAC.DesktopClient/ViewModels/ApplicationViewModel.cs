@@ -12,11 +12,8 @@ namespace PAC.DesktopClient.ViewModels
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Input;
-
     using PAC.Windows;
 
-namespace PAC.DesktopClient.ViewModels
-{
     /// <summary>
     /// The application view model class.
     /// </summary>
@@ -27,7 +24,7 @@ namespace PAC.DesktopClient.ViewModels
         /// <summary>
         /// The change page command.
         /// </summary>
-        private ICommand changePageCommand;
+        private ActionCommand changePageCommand;
 
         /// <summary>
         /// The current page view model.
@@ -60,7 +57,7 @@ namespace PAC.DesktopClient.ViewModels
         /// <summary>
         /// Gets the change page command.
         /// </summary>
-        public ICommand ChangePageCommand
+        public ActionCommand ChangePageCommand
         {
             get
             {
