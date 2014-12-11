@@ -1,146 +1,241 @@
-﻿using PAC.Data;
-using PAC.Data.Model;
-using PAC.DesktopClient.Views;
-using PAC.Windows;
-using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TeacherViewModel.cs" company="J.N systems">
+//   .
+// </copyright>
+// <summary>
+//   The teacher view model class.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace PAC.DesktopClient.ViewModels
 {
-    class TeacherViewModel : ViewModel, IPageViewModel
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
+    using PAC.Data;
+    using PAC.Data.Model;
+    using PAC.DesktopClient.Views;
+    using PAC.Windows;
+
+    /// <summary>
+    /// The teacher view model class.
+    /// </summary>
+    public class TeacherViewModel : ViewModel, IPageViewModel
     {
         #region Fields
+
+        /// <summary>
+        /// The child view model.
+        /// </summary>
         private TeacherViewModel childViewModel;
-        private string _firstName;
-        private string _lastName;
-        private string _success;
-        private MyObservableCollection<Teacher> _teachers;
-        private Teacher _selectedTeacher = new Teacher();
+
+        /// <summary>
+        /// The first name variable.
+        /// </summary>
+        private string firstName;
+
+        /// <summary>
+        /// The last name variable.
+        /// </summary>
+        private string lastName;
+
+        /// <summary>
+        /// The success variable. 
+        /// </summary>
+        private string success;
+
+        /// <summary>
+        /// The teachers.
+        /// a dynamic data collection that provides notifications when items get added, removed, or when the whole list is refreshed
+        /// </summary>
+        private MyObservableCollection<Teacher> teachers;
+
+        /// <summary>
+        /// The selected teacher.
+        /// </summary>
+        private Teacher selectedTeacher = new Teacher();
      
         #endregion
 
-         public TeacherViewModel()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeacherViewModel"/> class.
+        /// </summary>
+        public TeacherViewModel()
         {
-            childViewModel = this;
-            _teachers = new MyObservableCollection<Teacher>();
+            this.childViewModel = this;
+            this.teachers = new MyObservableCollection<Teacher>();
             try
             {
                 var bc = new BusinessContext();
                 foreach (Teacher teacher in bc.GetAllTeachers())
                 {
-                    Teachers.Add(teacher);
+                    this.Teachers.Add(teacher);
                 }
             }
             catch (Exception)
             {
                 // TODO: Cover error handling
             }
-
         }
 
          #region Properties/Commands
-         public MyObservableCollection<Teacher> Teachers{
-             get { return _teachers; }
-             set
-             {
-                 _teachers = value;
-                 NotifyPropertyChanged("Teachers");
+
+        /// <summary>
+        /// Gets or sets the teachers.
+        /// </summary>
+        public MyObservableCollection<Teacher> Teachers
+        {
+            get
+            {
+                return this.teachers;
+            }
+
+            set
+            {
+                 this.teachers = value;
+                 this.NotifyPropertyChanged();
              } 
          }
 
-         public Teacher SelectedTeacher
-         {
-             get { return _selectedTeacher; }
-             set
-             {
-                 _selectedTeacher = value;
-                 NotifyPropertyChanged("SelectedTeacher");
-             }
-         }
-         public string Name
-         {
-             get { return "Teacher"; }
-         }
+        /// <summary>
+        /// Gets or sets the selected teacher.
+        /// </summary>
+        public Teacher SelectedTeacher
+        {
+            get
+            {
+                return this.selectedTeacher;
+            }
 
-         public string Success
-         {
-             get { return _success; }
-             set
-             {
-                 _success = value;
-                 NotifyPropertyChanged("Success");
+            set
+            {
+                 this.selectedTeacher = value;
+                 this.NotifyPropertyChanged();
              }
          }
 
-         public string FirstName
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        public string Name
          {
-             get { return _firstName; }
-             set
-             {
-                 if (value != _firstName)
+            get { return "Teacher"; }
+         }
+
+        /// <summary>
+        /// Gets or sets the success.
+        /// </summary>
+        public string Success
+        {
+            get
+            {
+                return this.success;
+            }
+
+            set
+            {
+                 this.success = value;
+                 this.NotifyPropertyChanged();
+             }
+         }
+
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
+        public string FirstName
+        {
+            get
+            {
+                return this.firstName;
+            }
+
+            set
+            {
+                 if (value != this.firstName)
                  {
-                     _firstName = value;
-                     NotifyPropertyChanged("FirstName");
+                     this.firstName = value;
+                     this.NotifyPropertyChanged();
                  }
              }
          }
 
-         public string LastName
-         {
-             get { return _lastName; }
-             set
-             {
-                 if (value != _lastName)
+        /// <summary>
+        /// Gets or sets the last name.
+        /// </summary>
+        public string LastName
+        {
+            get
+            {
+                return this.lastName;
+            }
+
+            set
+            {
+                 if (value != this.lastName)
                  {
-                     _lastName = value;
-                     NotifyPropertyChanged("LastName");
+                     this.lastName = value;
+                     this.NotifyPropertyChanged();
                  }
              }
          }
 
-         public ActionCommand CreateTeacherCommand
+        /// <summary>
+        /// Gets the create teacher command.
+        /// </summary>
+        public ActionCommand CreateTeacherCommand
          {
              get
              {
-                 return new ActionCommand(s => CreateTeacher()
-                     , s => true);
+                 return new ActionCommand(s => this.CreateTeacher(), s => true);
              }
          }
 
-         public ActionCommand AddTeacherCommand
+        /// <summary>
+        /// Gets the add teacher command.
+        /// </summary>
+        public ActionCommand AddTeacherCommand
          {
              get
              {
-                 return new ActionCommand(s => AddTeacher(FirstName, LastName),
-                                          s => IsValid);
+                 return new ActionCommand(s => this.AddTeacher(this.FirstName, this.LastName), s => this.IsValid);
              }
          }
 
-         public ActionCommand<Teacher> EditTeacherCommand
+        /// <summary>
+        /// Gets the edit teacher command.
+        /// </summary>
+        public ActionCommand<Teacher> EditTeacherCommand
          {
              get
              {
                  return new ActionCommand<Teacher>(
-                      s => EditTeacher(),
+                      s => this.EditTeacher(),
                       s => true);
              }
          }
 
-         public ActionCommand<Teacher> SaveTeacherCommand
+        /// <summary>
+        /// Gets the save teacher command.
+        /// </summary>
+        public ActionCommand<Teacher> SaveTeacherCommand
          {
              get
              {
                  return new ActionCommand<Teacher>(
-                      s => SaveTeacher(SelectedTeacher),
+                      s => this.SaveTeacher(this.SelectedTeacher),
                       s => true);
              }
          }
 
-         public ActionCommand<Teacher> DeleteTeacherCommand
+        /// <summary>
+        /// Gets the delete teacher command.
+        /// </summary>
+        public ActionCommand<Teacher> DeleteTeacherCommand
          {
              get
              {
                  return new ActionCommand<Teacher>(
-                      s => DeleteTeacher(SelectedTeacher),
+                      s => this.DeleteTeacher(this.SelectedTeacher),
                       s => true);
              }
          }
@@ -149,28 +244,48 @@ namespace PAC.DesktopClient.ViewModels
 
          #region Methods
 
-         public bool IsValid
+        /// <summary>
+        /// Gets a value indicating whether is valid.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1404:CodeAnalysisSuppressionMustHaveJustification", Justification = "Reviewed. Suppression is OK here.")]
+        public bool IsValid
          {
-             get
+            [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1121:UseBuiltInTypeAlias", Justification = "Reviewed. Suppression is OK here.")]
+            get
              {
-                 return !String.IsNullOrWhiteSpace(FirstName) &&
-                        !String.IsNullOrWhiteSpace(LastName);
+              return !String.IsNullOrWhiteSpace(this.FirstName) &&
+                        !String.IsNullOrWhiteSpace(this.LastName);
              }
          }
 
-         private void CreateTeacher()
-         {
-             var view = new CreateTeacherView {DataContext = childViewModel};
-             view.Show();
-         }
+        /// <summary>
+        /// The create teacher.
+        /// </summary>
+        private void CreateTeacher()
+        {
+            var view = new CreateTeacherView { DataContext = this.childViewModel };
+            view.Show();
+        }
 
-         private void EditTeacher()
-         {
-             var view = new EditTeacherView {DataContext = childViewModel};
-             view.ShowDialog();
-         }
+        /// <summary>
+        /// The edit teacher.
+        /// </summary>
+        private void EditTeacher()
+        {
+            var view = new EditTeacherView { DataContext = this.childViewModel };
+            view.ShowDialog();
+        }
 
-         private void AddTeacher(string firstName, string lastName)
+        /// <summary>
+        /// The add teacher.
+        /// </summary>
+        /// <param name="firstName">
+        /// The first name.
+        /// </param>
+        /// <param name="lastName">
+        /// The last name.
+        /// </param>
+        private void AddTeacher(string firstName, string lastName)
          {
              using (var api = new BusinessContext())
              {
@@ -178,7 +293,6 @@ namespace PAC.DesktopClient.ViewModels
                  {
                      FirstName = firstName,
                      LastName = lastName,
-                    
                  };
 
                  try
@@ -189,12 +303,19 @@ namespace PAC.DesktopClient.ViewModels
                  {
                      // TODO: Cover error handling
                  }
-                 Success = "Teacher " + FirstName + " " + LastName + " added";
-                 Teachers.Add(teacher);
+
+                 this.Success = "Teacher " + this.FirstName + " " + this.LastName + " added";
+                 this.Teachers.Add(teacher);
              }
          }
 
-         private void SaveTeacher(Teacher teacher)
+        /// <summary>
+        /// The save teacher.
+        /// </summary>
+        /// <param name="teacher">
+        /// The teacher.
+        /// </param>
+        private void SaveTeacher(Teacher teacher)
          {
              using (var api = new BusinessContext())
              {
@@ -210,13 +331,20 @@ namespace PAC.DesktopClient.ViewModels
                  {
                      // TODO: Cover error handling
                  }
-                 Success = "Teacher " + teacher.FirstName + " " + teacher.LastName + " saved!";
-                 int index = Teachers.IndexOf(teacher);
-                 Teachers.ReplaceItem(index, teacher);
+
+                 this.Success = "Teacher " + teacher.FirstName + " " + teacher.LastName + " saved!";
+                 int index = this.Teachers.IndexOf(teacher);
+                 this.Teachers.ReplaceItem(index, teacher);
              }
          }
 
-         private void DeleteTeacher(Teacher teacher)
+        /// <summary>
+        /// The delete teacher.
+        /// </summary>
+        /// <param name="teacher">
+        /// The teacher.
+        /// </param>
+        private void DeleteTeacher(Teacher teacher)
          {
              using (var api = new BusinessContext())
              {
@@ -229,12 +357,11 @@ namespace PAC.DesktopClient.ViewModels
                  {
                      // TODO: Cover error handling
                  }
-                 Teachers.Remove(teacher);
+
+                 this.Teachers.Remove(teacher);
              }
          }
-         #endregion
 
-
-
+        #endregion
     }
 }

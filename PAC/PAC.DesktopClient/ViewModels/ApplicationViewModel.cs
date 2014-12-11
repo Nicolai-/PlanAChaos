@@ -5,6 +5,9 @@ using PAC.Windows;
 
 namespace PAC.DesktopClient.ViewModels
 {
+    /// <summary>
+    /// The application view model class.
+    /// </summary>
     public class ApplicationViewModel : ViewModel 
     {
         #region Fields
@@ -16,57 +19,71 @@ namespace PAC.DesktopClient.ViewModels
 
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationViewModel"/> class.
+        /// </summary>
         public ApplicationViewModel()
         {
-            // Add available pages
-            PageViewModels.Add(new HomeViewModel());
-            PageViewModels.Add(new StudentViewModel());
-            PageViewModels.Add(new TeacherViewModel());
+            // available pages
+            this.PageViewModels.Add(new HomeViewModel());
+            this.PageViewModels.Add(new StudentViewModel());
+            this.PageViewModels.Add(new TeacherViewModel());
 
             // Set starting page
-            CurrentPageViewModel = PageViewModels[0];
+            this.CurrentPageViewModel = this.PageViewModels[0];
         }
 
         #region Properties / Commands
 
+        /// <summary>
+        /// Gets the change page command.
+        /// </summary>
         public ICommand ChangePageCommand
         {
             get
             {
-                if (_changePageCommand == null)
+                if (this._changePageCommand == null)
                 {
-                    _changePageCommand = new ActionCommand(
-                        p => ChangeViewModel((IPageViewModel)p),
+                    this._changePageCommand = new ActionCommand(
+                        p => this.ChangeViewModel((IPageViewModel)p),
                         p => p is IPageViewModel);
                 }
 
-                return _changePageCommand;
+                return this._changePageCommand;
             }
         }
 
+        /// <summary>
+        /// Gets the page view models.
+        /// </summary>
         public List<IPageViewModel> PageViewModels
         {
             get
             {
-                if (_pageViewModels == null)
-                    _pageViewModels = new List<IPageViewModel>();
+                if (this._pageViewModels == null)
+                {
+                    this._pageViewModels = new List<IPageViewModel>();
+                }
 
-                return _pageViewModels;
+                return this._pageViewModels;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the current page view model.
+        /// </summary>
         public IPageViewModel CurrentPageViewModel
         {
             get
             {
-                return _currentPageViewModel;
+                return this._currentPageViewModel;
             }
             set
             {
-                if (_currentPageViewModel != value)
+                if (this._currentPageViewModel != value)
                 {
-                    _currentPageViewModel = value;
-                    NotifyPropertyChanged("CurrentPageViewModel");
+                    this._currentPageViewModel = value;
+                    this.NotifyPropertyChanged("CurrentPageViewModel");
                 }
             }
         }
@@ -75,12 +92,18 @@ namespace PAC.DesktopClient.ViewModels
 
         #region Methods
 
+        /// <summary>
+        /// The change view model.
+        /// </summary>
+        /// <param name="viewModel">
+        /// The view model.
+        /// </param>
         private void ChangeViewModel(IPageViewModel viewModel)
         {
-            if (!PageViewModels.Contains(viewModel))
-                PageViewModels.Add(viewModel);
+            if (!this.PageViewModels.Contains(viewModel))
+                this.PageViewModels.Add(viewModel);
 
-            CurrentPageViewModel = PageViewModels
+            this.CurrentPageViewModel = this.PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
         }
 
